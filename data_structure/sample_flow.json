@@ -1,0 +1,23 @@
+flow: {
+	id: 100,
+	name: "Book Issue Flow",
+	description: "This flow is for the end to end process of a Book Issue starting from a customer request to ultimate delivery",
+	sequential: {
+		start: {},
+		log: {
+			message: "ENTRY LOG MESSAGE"
+		},
+		transformation: {
+			type: "XSLT",
+			url: "file:///D:/test.xsl"
+		},
+		log: {
+			message: "EXIT LOG MESSAGE"
+		},
+		to: {
+			type: "file",
+			directory: "D:/test",
+			file: "book_issue_${transactionId}.txt
+		}
+	}
+}
