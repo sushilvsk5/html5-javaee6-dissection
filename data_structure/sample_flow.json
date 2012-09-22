@@ -9,7 +9,7 @@ flow: {
 		},
 		transformation: {
 			type: "XSLT",
-			url: "file:///D:/work/test.xsl"
+			url: "file:///D:/work_again/test.xsl"
 		},
 		log: {
 			message: "EXIT LOG MESSAGE"
