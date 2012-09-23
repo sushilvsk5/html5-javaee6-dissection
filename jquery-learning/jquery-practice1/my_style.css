@@ -1,0 +1,20 @@
+div{
+	float:left;
+	height:100px;
+	text-align:left;
+	border: solid #000 3px;
+}
+#header{
+	width:100%;
+	border: 0px;
+	height:50px;
+}
+#main{
+	background-color: grey;
+	height: 500px;
+}
+.nav {
+	--display: block;
+	--border: solid #00f 1px;
+	--width: 100%;
+}
