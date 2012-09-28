@@ -1,0 +1,46 @@
+html #navbar_general {
+	height: 1%;
+}
+
+html #navbar_general ul li ul li {
+	display: inline;
+}
+
+form.general .button {
+	overflow: visible;
+}
+
+form.general fieldset {
+	position: relative;
+}
+
+form.general fieldset legend{
+	position: absolute;
+	top: -0.5em;
+	left: 7.5px;
+	margin-left: 0;
+}
+
+#content_body{
+	text-align: center;	
+}
+
+#content{
+	text-align: left;
+	margin-left: 0;
+	margin-right: 0;	
+}
+
+#content .left {
+	width: 250px;				
+}
+
+#content .right {
+	width: 250px;			
+	margin-right: 0;
+}
+
+.two_column_list div{	
+	border: 1px solid;
+	border-color: transparent;	
+}

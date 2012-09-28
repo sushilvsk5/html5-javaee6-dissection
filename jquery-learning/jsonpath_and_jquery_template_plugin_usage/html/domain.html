@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="../theme/jquery.alerts.css" />
+<link rel="stylesheet" type="text/css" href="../theme/main.css" />
+<!--[if lte IE 9]>
+<link rel="stylesheet" type="text/css" href="../theme/ie_hack.css" />
+<![endif]-->
+<script type="text/javascript" src="../javascript/lib/jquery-1.6.4.js"></script>
+<script type="text/javascript"
+	src="../javascript/lib/jquery.json-2.3.js"></script>
+<script type="text/javascript" src="../javascript/lib/jsonpath-0.8.0.js"></script>
+<script type="text/javascript" src="../javascript/lib/jquery.tmpl.js"></script>
+<script type="text/javascript" src="../javascript/lib/jquery.alerts.js"></script>
+<script type="text/javascript" src="../javascript/main.js"></script>
+
+<script type="text/javascript">
+	var all_data = {
+		endpointTypes : {
+		 "100" : {id : 100, value : "HTTP"},
+		 "200" : {id : 200, value : "JMS"}
+		},	
+		domains : {
+			"100" : {
+				id : 100,
+				name : "Domain A",
+				endpointType : 100,
+				endpointAddress : "http://www.cts.com/domainA"
+			},
+			"200" : {
+				id : 200,
+				name : "Domain B",
+				endpointType : 200,
+				endpointAddress : "http://www.cts.com/domainB"
+			},
+			"300" : {
+				id : 300,
+				name : "Domain C",
+				endpointType : 100,
+				endpointAddress : "http://www.cts.com/domainC"
+			},
+			"400" : {
+				id : 400,
+				name : "Domain D",
+				endpointType : 100,
+				endpointAddress : "http://www.cts.com/domainD"
+			},
+			"500" : {
+				id : 500,
+				name : "Domain E",
+				endpointType : 100,
+				endpointAddress : "http://www.cts.com/domainE"
+			}
+		},
+		associations : {
+			"100" : {
+				id : 100,
+				sourceDomain : 400,
+				targetDomain : 100,
+				rule : 'ALL'
+			},
+			"200" : {
+				id : 200,
+				sourceDomain : 400,
+				targetDomain : 300,
+				rule : 'ALL'
+			},
+			"300" : {
+				id : 300,
+				sourceDomain : 500,
+				targetDomain : 400,
+				rule : 'ALL'
+			}
+		}
+	};
+</script>
+
+<script id="template_no_domains" type="text/x-jquery-tmpl">
+    <tr id="no_domains">
+		<td colspan="5"><div>No Domains are present as of now. Please use this Screen to create domains and establish rule based associations between different domains</div></td>
+	</tr>
+</script>
+
+<script id="template_domain_row_new" type="text/x-jquery-tmpl">
+    <tr id="domain_row_new">
+		<td><input type="text" name="domain_name" class="domain_name"></td>
+		<td>
+			<select name="domain_endpoint_type" class="domain_endpoint_type">
+			{{each v_endpointTypes}}	
+				<option value="${$value.id}">${$value.value}</option>
+			{{/each}}
+			</select>
+		</td>
+		<td><input type="text" name="domain_endpoint_address" class="domain_endpoint_address"></td>
+		<td></td>
+		<td>
+			<span class="icon_container">
+				<a href="#" class="action_save" title="Save"><img src="../images/save.png"></a>
+				<span class="icon_separator"><img src="../images/icon_separator.png"></span>
+				<a href="#" class="action_cancel" title="Cancel"><img src="../images/cancel.png"></a>
+			</span>
+		</td>
+	</tr>
+</script>
+<script id="template_domain_row_editable" type="text/x-jquery-tmpl">
+	<tr id="${id}_domain_row" class="domain_row" class="domain_row">						
+		<td><input type="text" name="domain_name" value="${name}" class="domain_name"></td>
+		<td>
+			<select name="domain_endpoint_type" class="domain_endpoint_type">
+			{{each v_endpointTypes}}
+				{{if $value.id == endpointType}}		
+					<option value="${$value.id}" selected="selected">${$value.value}</option>
+				{{else}}
+					<option value="${$value.id}">${$value.value}</option>
+				{{/if}}
+			{{/each}}	
+			</select>
+		</td>
+		<td><input type="text" name="domain_endpoint_address" value="${endpointAddress}" class="domain_endpoint_address"></td>
+		<td class="collapsed"><a href="#" class="domain_association_link">${associationCount}</a></td>
+		<td>
+			<span class="icon_container">
+				<a href="#" class="action_save" title="Save"><img src="../images/save.png"></a>
+				<span class="icon_separator"><img src="../images/icon_separator.png"></span>
+				<a href="#" class="action_cancel" title="Cancel"><img src="../images/cancel.png"></a>
+			</span>
+		</td>
+	</tr>
+</script>
+<script id="template_domain_row_read_only" type="text/x-jquery-tmpl">
+	<tr id="${id}_domain_row" class="domain_row">						
+		<td>${name}</td>
+		<td>${v_endpointTypes[endpointType].value}</td>
+		<td>${endpointAddress}</td>
+		<td class="collapsed"><a href="#" class="domain_association_link">${associationCount}</a></td>
+		<td>
+			<span class="icon_container">
+				<a href="#" class="action_edit" title="Edit"><img src="../images/edit.png"></a>
+				<span class="icon_separator"><img src="../images/icon_separator.png"></span>
+				<a href="#" class="action_delete" title="Delete"><img src="../images/delete.png"></a>
+			</span>
+		</td>
+	</tr>
+</script>
+<script id="template_domain_association_row" type="text/x-jquery-tmpl">
+	<tr id="${id}_domain_association_row" class="domain_association_row">
+		<td colspan="5">
+			<div class="association_container">
+				<div class="new_association">
+					<a href="#">Create New Association</a>
+				</div>
+				<div class="clear_float"></div>
+				{{tmpl "#template_association_list_table"}}
+			</div>
+		</td>
+	</tr>
+</script>
+<script id="template_association_list_table" type="text/x-jquery-tmpl">
+	<table class="association_list" id="${id}_domain_association_table">
+		<thead>
+			<tr>
+				<th class="col_association_type">Direction</th>
+				<th class="col_association_rule">Rule</th>
+				<th class="col_related_domain">Domain Name</th>
+				<th class="col_association_actions">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+		{{if associationCount > 0}}
+			{{each jsonPath(v_associations, "$.[?(@.sourceDomain=="+id+")]")}}
+				{{tmpl($value, {domainId: $data.id, direction: 'to'}) "#template_each_association_row"}}
+			{{/each}}
+			{{each jsonPath(v_associations, "$.[?(@.targetDomain=="+id+")]")}}
+				{{tmpl($value, {domainId: $data.id, direction: 'from'}) "#template_each_association_row"}}
+			{{/each}}
+		{{else}}
+			{{tmpl({domainId: id}) "#template_no_associations"}}
+		{{/if}}
+		</tbody>
+	</table>
+</script>
+<script id="template_no_associations" type="text/x-jquery-tmpl">
+    <tr id="${domainId}_no_associations">
+		<td colspan="4"><div>This Domain has no associations. Please use this screen to add federation associations for this domain</div></td>
+	</tr>
+</script>
+<script id="template_each_association_row" type="text/x-jquery-tmpl">
+	<tr id="${$item.domainId}_${id}_association_row">
+		<td>
+			<span class="icon_container">
+			{{if $item.direction == 'to'}}
+				<img src="../images/right_arrow.png">
+			{{else}}
+				<img src="../images/left_arrow.png">
+			{{/if}}
+			</span>
+		</td>
+		<td class="col_association_rule">${rule}</td>
+		{{if $item.direction == 'to'}}
+			<td class="col_related_domain">${v_domains[targetDomain].name}</td>
+		{{else}}
+			<td class="col_related_domain">${v_domains[sourceDomain].name}</td>
+		{{/if}}
+		<td>
+			<span class="icon_container">
+				<a href="#" title="Delete" class="action_delete"><img src="../images/delete.png"></a>
+			</span>
+		</td>
+	</tr>
+</script>
+<script id="template_new_association_row" type="text/x-jquery-tmpl">
+	<tr id="${domainId}_new_association_row">
+		<td>
+			<span class="icon_container">
+				<img src="../images/right_arrow.png">
+			</span>
+		</td>
+		<td class="col_association_rule">
+			<select name="association_rule" class="association rule_dropdown">
+				<option value="ALL">ALL</option>
+			</select>
+		</td>
+		<td class="col_related_domain">
+			<select name="related_domain">
+			{{each v_domains}}
+				{{if $value.id != domainId}}		
+					<option value="${$value.id}">${$value.name}</option>
+				{{/if}}
+			{{/each}}
+			</select>
+		</td>
+		<td>
+			<span class="icon_container">
+				<a href="#" class="action_save" title="Save"><img src="../images/save.png"></a>
+				<span class="icon_separator"><img src="../images/icon_separator.png"></span>
+				<a href="#" class="action_cancel" title="Cancel"><img src="../images/cancel.png"></a>
+			</span>
+		</td>
+	</tr>
+</script>
+<title>JQuery Template Demonstration</title>
+</head>
+<body>	
+	<div id="domain_list_container" class="box">
+		<span class="heading">Domain List</span>
+		<div id="new_domain">
+			<a href="#">Create New Domain</a>
+		</div>
+		<div class="clear_float"></div>
+		<form id="domain_list_form">
+			<table id="domain_list" class="box">
+				<thead>
+					<tr>
+						<th class="col_domain">Domain Name</th>
+						<th class="col_endpoint_type">Endpoint Type</th>
+						<th class="col_endpoint_address">Endpoint Address</th>
+						<th class="col_association">Associations</th>
+						<th class="col_actions">Action</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</form>
+		<div class="clear_float"></div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,240 @@
+@CHARSET "ISO-8859-1";
+
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+li {
+	list-style-type: none;
+}
+
+body {
+	font-family: "Calibri";
+	font-size: 12px;
+	color: #215968;
+	padding-top: 20px;
+	background-color: #E9F1F5;
+}
+
+form input,select,textarea {
+	font-family: "Calibri";
+	font-size: 12px;
+	color: #215968;
+}
+
+img {
+	border: 0;
+}
+
+table {
+	border: 2px #F3F8FA solid;
+	border-collapse: collapse;
+}
+
+td,th {
+	border: 1px #F3F8FA solid;
+	padding: 4px 5px 4px 5px;
+	text-align: left;
+}
+
+th {
+	background-color: #6FBDD1;
+	font-weight: bold;
+	font-size: 13px;
+}
+
+table tr.odd {
+	background-color: #D0E3EA;
+}
+
+table tr.even {
+	background-color: #E9F1F5;
+}
+
+.clear_float {
+	clear: both;
+}
+
+.box {
+	border: 1px #93CDDD solid;
+	padding: 0px;	
+	box-shadow: 0px 2px 6px #276a7b;
+}
+
+.box .heading {
+	background-color: #93CDDD;
+	color: #215968;
+	padding: 4px;
+	font-weight: bold;
+	font-size: 15px;
+	display: block;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	
+}
+
+#domain_list_container {
+	width: 950px;
+	background-color: #FFFFFF;
+	min-height: 550px;
+	height: auto !important;	
+	margin-left: auto;
+	margin-right: auto;
+	padding-bottom: 20px;
+}
+
+#new_domain,.new_association {
+	text-align: right;
+	float: right;
+	height: 18px;
+	border: 1px #A6A6A6 solid;
+	border-radius: 8px;
+	background-color: #17375E;
+	background-image: url("../images/add.png");
+	background-repeat: no-repeat;
+	background-position: 5px 50%;
+	padding: 4px 10px 0px 15px;
+}
+
+#new_domain {
+	margin-top: 10px;
+	margin-right: 20px;
+	margin-bottom: 8px;
+	width: 120px;
+}
+
+#new_domain a,.new_association a {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+#domain_list {
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#domain_list th.col_domain {
+	width: 150px;
+}
+
+#domain_list th.col_endpoint_type {
+	width: 125px;
+}
+
+#domain_list th.col_endpoint_address {
+	width: 300px;
+}
+
+#domain_list th.col_association {
+	width: 125px;
+	text-align: center;
+}
+
+#domain_list th.col_actions {
+	width: 150px;
+	text-align: center;
+}
+
+#domain_list td.collapsed {
+	text-align: center;
+}
+
+#domain_list td.collapsed a {
+	
+}
+
+#domain_list td.expanded {
+	text-align: center;
+	background-color: #B5ECB2;
+	border-bottom-color: #B5ECB2;
+}
+
+#domain_list td.expanded a {
+	
+}
+
+#domain_list_form .domain_name {
+	width: 145px;
+}
+
+#domain_list_form .domain_endpoint_type {
+	width: 75px;
+}
+
+#domain_list_form .domain_endpoint_address {
+	width: 250px;
+}
+
+#domain_list span.icon_container {
+	display: block;
+	text-align: center;
+}
+
+#domain_list tr.domain_association_row {
+	background-color: #D1F3CF; -
+	-display: none;
+}
+
+.association_container {
+	position: relative;
+}
+
+.new_association {
+	margin-top: 3px;
+	margin-right: 155px;
+	margin-bottom: 3px;
+	width: 142px;
+}
+
+.association_list {
+	margin-top: 2px;
+	margin-bottom: 5px;
+	margin-left: 154px;
+	margin-right: auto;
+}
+
+.association_list th.col_association_type {
+	width: 125px;
+	text-align: center;
+}
+
+.association_list th.col_association_rule {
+	width: 79px;
+}
+
+.association_list th.col_related_domain {
+	width: 210px;
+}
+
+.association_list th.col_association_actions {
+	width: 125px;
+}
+
+.association_list td.col_association_rule {
+	
+}
+
+.association_list td.col_association_rule select {
+	width: 60px;
+}
+
+.association_list td.col_related_domain select {
+	width: 160px;
+}
+
+tr[id $="_association_row_new"] {
+	display: none;
+}
+
+#no_domains div {
+	width: 850px;
+	font-size: 1.2em;
+	text-wrap: break-word;
+}
+
+tr[id $="_no_associations"] div {
+	width: 530px;
+	font-size: 1.1em;
+	text-wrap: break-word;
+}
