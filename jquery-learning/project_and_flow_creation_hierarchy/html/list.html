@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>List Generator</title>
+<link rel="stylesheet" type="text/css" href="../style/style.css" />
+<script type="text/javascript" src="../js/jquery-1.8.1.min.js"></script>
+
+<script type='text/javascript'>
+	//<![CDATA[ 
+	$(window)
+			.load(
+					function() {
+						var projectID = $('#projetcs li#0').attr('id');
+						var d_cur_no = parseInt(projectID);
+
+						$('#dr')
+								.click(
+										function() {
+											d_cur_no++;
+											$('#projetcs')
+													.append(
+															'<li id="'
+																	+ d_cur_no
+																	+ '"><input type="text" />&nbsp;&nbsp;<a href="javascript:void(0)" onclick="dBtnClick('
+																	+ d_cur_no
+																	+ ');">Add Sub List Item</a></li>');
+										});
+
+					});//]]>
+</script>
+</head>
+<body>
+<script type="text/javascript">
+	$.fn.exists = function() {
+		return this.length > 0;
+	}
+	function dBtnClick(val) {
+		var parentNo = val;
+
+		if ($('#projetcs li#' + parentNo + ' ul.sublists').exists()) {
+		//	var tempId = $('#projetcs li#' + parentNo + ' ul.sublists li').eq(-1).attr('id');
+			var tempChildId = $('#projetcs li#' + parentNo + ' ul.sublists li').eq(-1).attr('id').split('.')[1];
+			tempChildId++;
+			
+			$('#projetcs li#' + parentNo + ' ul.sublists').append(
+					'<li id="' + parentNo + '.' + tempChildId
+							+ '"><input type="text" /></li>')
+		} else if (!$('#projetcs li#' + parentNo + ' ul.sublists').exists()) {
+			$("#projetcs li#" + parentNo).append(
+					'<ul class="sublists"><li  id="' + parentNo + '.' + 0
+							+ '"><input type="text"/></li></ul>')
+		}
+	}
+</script>
+
+<h3>Projects and Flows:</h3>
+<ul id="projetcs">
+	<li id="0"><input type="text" />&nbsp;&nbsp;<a
+		href="javascript:void(0)" class="dbtn" onclick=
+	dBtnClick(0);
+>Add
+	Sub List Item</a></li>
+</ul>
+<span class="controls"> <a href="javascript:void(0)" id="dr">Add
+List Item</a> </span>
+
+</body>
+
+
+</html>

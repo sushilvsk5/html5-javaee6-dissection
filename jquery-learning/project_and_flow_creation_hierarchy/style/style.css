@@ -1,0 +1,37 @@
+body {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 14px;
+    margin: 20px;
+}
+h3{ 
+	margin: 0 20px; 
+	font-weight:bold; 
+	font-size: 26px; 
+}
+ul {  
+	margin:5px 20px; 
+	padding:0px; 
+}
+ul li { 
+	margin: 5px 0; 
+	list-style-type: circle  
+}
+p input { 
+	width: 350px; 
+	padding:5px; 
+}
+ul li input { 
+	width: 330px; 
+	padding:5px; 
+}
+ul ul li input { 
+	width: 310px; 
+	padding:5px; 
+}
+textarea { 
+	width: 350px; 
+	padding:5px; 
+}
+.controls { 
+	margin: 0 20px; 
+}
